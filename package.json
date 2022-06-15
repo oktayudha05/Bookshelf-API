@@ -1,0 +1,26 @@
+{
+  "name": "bookshelf-api-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oktayudha05/Bookshelf-API-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oktayudha05/Bookshelf-API-2/issues"
+  },
+  "homepage": "https://github.com/oktayudha05/Bookshelf-API-2#readme",
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2",
+    "nanoid": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.17.0"
+  }
+}
