@@ -1,3 +1,3 @@
-const books = {}
+const books = []
 
-module.exports = books
+export {books}

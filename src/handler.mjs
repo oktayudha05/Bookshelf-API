@@ -1,5 +1,5 @@
-const books = require('./books.js')
-const {nanoid} = require('nanoid')
+import {books} from './books.js'
+import { nanoid } from 'nanoid'
 
 const addBookHandler = (request, h) => {
     const {name, author, year, summary, publisher, pageCount, readPage, reading} = request.payload
@@ -53,4 +53,17 @@ const addBookHandler = (request, h) => {
     return response
 }
 
-module.exports = {addBookHandler}
+const getAllBooks = (request, h) => {
+    const response = h.response({
+        status : 'success',
+        data : books.map(book => ({
+            id : book.id,
+            name : book.name,
+            publisher : book.publisher,
+        }))
+    })
+    response.code(200)
+    return response
+}
+
+export {addBookHandler, getAllBooks}
