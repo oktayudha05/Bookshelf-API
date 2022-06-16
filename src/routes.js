@@ -1,4 +1,4 @@
-import {addBookHandler, getAllBooks, getBookById} from './handler.mjs'
+import {addBookHandler, getAllBooks, getBookById} from './handler.js'
 
 const routes = [
     {
