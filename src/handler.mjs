@@ -54,6 +54,80 @@ const addBookHandler = (request, h) => {
 }
 
 const getAllBooks = (request, h) => {
+    let name = request.query.name
+    const reading = request.query.reading
+    const finished = request.query.finished
+
+    if (name) {
+        name = name.toLowerCase().replace(/[""]+/g, '')
+        const book = books.filter(book => book.name === name)
+
+        const response = h.respnse({
+            status : 'success',
+            data : book.map(book => ({
+                id : book.id,
+                name : book.name,
+                publisher : book.publisher
+            }))
+        })
+        response.code(200)
+        return response
+    } 
+    if (reading == 1) {
+        const book = books.filter(book => book.reading == true)
+
+        const response = h.response({
+            status : 'success',
+            data : book.map(book => ({
+                id : book.id,
+                name : book.name,
+                publisher : book.publisher
+            }))
+        })
+        response.code(200)
+        return response
+    } else if (reading == 0) {
+        const book = books.filter(book => book.reading == false)
+
+        const response = h.response({
+            status : 'success',
+            data : book.map(book => ({
+                id : book.id,
+                name : book.name,
+                publisher : book.publisher
+            }))
+        })
+        response.code(200)
+        return response
+    } 
+    if (finished == 1) {
+        const book = books.filter(book => book.finished == true)
+
+        const response = h.response({
+            status : 'success',
+            data : book.map(book => ({
+                id : book.id,
+                name : book.name,
+                publisher : book.publisher
+            }))
+        })
+        response.code(200)
+        return response
+    } else if (finished == 0) {
+        const book = books.filter(book => book.finished == false)
+
+        const response = h.response({
+            status : 'success',
+            data : book.map(book => ({
+                id : book.id,
+                name : book.name,
+                publisher : book.publisher
+            }))
+        })
+        response.code(200)
+        return response
+    }
+    
     const response = h.response({
         status : 'success',
         data : books.map(book => ({
@@ -69,7 +143,7 @@ const getAllBooks = (request, h) => {
 const getBookById = (request, h) => {
     const {bookId} = request.params
 
-    const book = books.filter(n => n.id === bookId)
+    const book = books.filter(book => book.id === bookId)
     if (book[0] !== undefined) {
         const response = h.response({
             status : 'success',
