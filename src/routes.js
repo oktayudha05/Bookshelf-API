@@ -1,4 +1,4 @@
-import {addBookHandler, getAllBooks} from './handler.mjs'
+import {addBookHandler, getAllBooks, getBookById} from './handler.mjs'
 
 const routes = [
     {
@@ -10,6 +10,11 @@ const routes = [
         method : 'GET',
         path : '/books',
         handler : getAllBooks
+    },
+    {
+        method : 'GET',
+        path : '/books/{bookid}',
+        handler : getBookById
     }
 ]
 
