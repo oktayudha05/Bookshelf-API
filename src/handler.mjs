@@ -60,14 +60,14 @@ const getAllBooks = (request, h) => {
 
     if (name) {
         name = name.toLowerCase().replace(/[""]+/g, '')
-        const book = books.filter(book => book.name === name)
+        const book = books.filter(book => book.name.toLowerCase().includes(name))
 
-        const response = h.respnse({
+        const response = h.response({
             status : 'success',
             data : book.map(book => ({
-                id : book.id,
                 name : book.name,
-                publisher : book.publisher
+                publisher : book.publisher,
+                id : book.id,
             }))
         })
         response.code(200)
@@ -79,9 +79,9 @@ const getAllBooks = (request, h) => {
         const response = h.response({
             status : 'success',
             data : book.map(book => ({
-                id : book.id,
                 name : book.name,
-                publisher : book.publisher
+                publisher : book.publisher,
+                id : book.id,
             }))
         })
         response.code(200)
@@ -92,9 +92,9 @@ const getAllBooks = (request, h) => {
         const response = h.response({
             status : 'success',
             data : book.map(book => ({
-                id : book.id,
                 name : book.name,
-                publisher : book.publisher
+                publisher : book.publisher,
+                id : book.id,
             }))
         })
         response.code(200)
@@ -106,9 +106,9 @@ const getAllBooks = (request, h) => {
         const response = h.response({
             status : 'success',
             data : book.map(book => ({
-                id : book.id,
                 name : book.name,
-                publisher : book.publisher
+                publisher : book.publisher,
+                id : book.id,
             }))
         })
         response.code(200)
@@ -119,9 +119,9 @@ const getAllBooks = (request, h) => {
         const response = h.response({
             status : 'success',
             data : book.map(book => ({
-                id : book.id,
                 name : book.name,
-                publisher : book.publisher
+                publisher : book.publisher,
+                id : book.id,
             }))
         })
         response.code(200)
@@ -131,9 +131,9 @@ const getAllBooks = (request, h) => {
     const response = h.response({
         status : 'success',
         data : books.map(book => ({
-            id : book.id,
             name : book.name,
             publisher : book.publisher,
+            id : book.id,
         }))
     })
     response.code(200)
