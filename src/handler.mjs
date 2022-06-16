@@ -69,8 +69,8 @@ const getAllBooks = (request, h) => {
 const getBookById = (request, h) => {
     const {bookId} = request.params
 
-    const book = books.filter(book => bookId === book.id)
-    if (book[0]) {
+    const book = books.filter(n => n.id === bookId)
+    if (book[0] !== undefined) {
         const response = h.response({
             status : 'success',
             data : book

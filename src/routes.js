@@ -13,7 +13,7 @@ const routes = [
     },
     {
         method : 'GET',
-        path : '/books/{bookid}',
+        path : '/books/{bookId}',
         handler : getBookById
     }
 ]
