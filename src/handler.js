@@ -6,6 +6,7 @@ const addBookHandler = (request, h) => {
     const id = nanoid(15)
     const finished = pageCount === readPage
     const insertedAt = new Date().toISOString()
+    const updateAt = insertedAt
 
     if (!name) {
         const response = h.response({
@@ -26,7 +27,7 @@ const addBookHandler = (request, h) => {
     }
 
     const newBook = {
-        name, author, year, summary, publisher, pageCount, readPage, reading, finished, insertedAt, id
+        name, author, year, summary, publisher, pageCount, readPage, reading, finished, insertedAt, updateAt, id
     }
 
     books.push(newBook)
@@ -161,4 +162,46 @@ const getBookById = (request, h) => {
     return response
 }
 
-export {addBookHandler, getAllBooks, getBookById}
+const updateBook = (request, h) => {
+    const {name, year, author, publisher, summary, pageCount, readPage, reading} = request.payload
+    const {bookId} = request.params
+    const index = books.findIndex(book => bookId === book.id)
+    const updateAt = new Date().toISOString()
+
+    if (!name) {
+        const response = h.response({
+            status : 'fail',
+            message : 'Gagal memperbarui buku. Mohon isi nama buku',
+        })
+        response.code(400)
+        return response
+    } else if (readPage > pageCount) {
+        const response = h.response({
+            status : 'fail',
+            message : 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+        })
+        response.code(400)
+        return response
+    } else if (index == -1) {
+        const response = h.response({
+            status : 'fail',
+            message : 'Gagal memperbarui buku. Id tidak ditemukan',
+        })
+        response.code(404)
+        return response
+    }
+    const newBook = {
+        ...books[index],
+        name, year, author, publisher, summary, pageCount, readPage, reading, updateAt,
+    }
+    books.splice(index, 1, newBook)
+    const response = h.response({
+        status : 'success',
+        message : 'Buku berhasil diperbarui',
+    })
+    response.code(200)
+    console.log(books);
+    return response
+}
+
+export {addBookHandler, getAllBooks, getBookById, updateBook}
