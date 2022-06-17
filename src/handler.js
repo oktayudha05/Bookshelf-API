@@ -161,7 +161,6 @@ const getBookById = (request, h) => {
 
     const book = books.filter(book => book.id === bookId)[0]
     if (book !== undefined) {
-        console.log(book);
         const response = h.response({
             status : 'success',
             data : {
