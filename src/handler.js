@@ -6,7 +6,7 @@ const addBookHandler = (request, h) => {
     const id = nanoid(15)
     const finished = pageCount === readPage
     const insertedAt = new Date().toISOString()
-    const updateAt = insertedAt
+    const updatedAt = insertedAt
 
     if (!name) {
         const response = h.response({
@@ -27,7 +27,7 @@ const addBookHandler = (request, h) => {
     }
 
     const newBook = {
-        name, author, year, summary, publisher, pageCount, readPage, reading, finished, insertedAt, updateAt, id
+        name, author, year, summary, publisher, pageCount, readPage, reading, finished, insertedAt, updatedAt, id
     }
 
     books.push(newBook)
@@ -60,16 +60,18 @@ const getAllBooks = (request, h) => {
     const finished = request.query.finished
 
     if (name) {
-        name = name.toLowerCase().replace(/[""]+/g, '')
+        name = name.toLowerCase().replace(/["]+/g, '')
         const book = books.filter(book => book.name.toLowerCase().includes(name))
 
         const response = h.response({
             status : 'success',
-            data : book.map(book => ({
-                name : book.name,
-                publisher : book.publisher,
-                id : book.id,
-            }))
+            data : {
+                books : book.map(book => ({
+                    name : book.name,
+                    id : book.id,
+                    publisher : book.publisher,
+                }))
+            }
         })
         response.code(200)
         return response
@@ -79,11 +81,13 @@ const getAllBooks = (request, h) => {
 
         const response = h.response({
             status : 'success',
-            data : book.map(book => ({
-                name : book.name,
-                publisher : book.publisher,
-                id : book.id,
-            }))
+            data : {
+                books : book.map(book => ({
+                    name : book.name,
+                    id : book.id,
+                    publisher : book.publisher,
+                }))
+            }
         })
         response.code(200)
         return response
@@ -92,11 +96,13 @@ const getAllBooks = (request, h) => {
 
         const response = h.response({
             status : 'success',
-            data : book.map(book => ({
-                name : book.name,
-                publisher : book.publisher,
-                id : book.id,
-            }))
+            data : {
+                books : book.map(book => ({
+                    name : book.name,
+                    id : book.id,
+                    publisher : book.publisher,
+                }))
+            }
         })
         response.code(200)
         return response
@@ -106,11 +112,13 @@ const getAllBooks = (request, h) => {
 
         const response = h.response({
             status : 'success',
-            data : book.map(book => ({
-                name : book.name,
-                publisher : book.publisher,
-                id : book.id,
-            }))
+            data : {
+                books : book.map(book => ({
+                    name : book.name,
+                    id : book.id,
+                    publisher : book.publisher,
+                }))
+            }
         })
         response.code(200)
         return response
@@ -119,36 +127,46 @@ const getAllBooks = (request, h) => {
 
         const response = h.response({
             status : 'success',
-            data : book.map(book => ({
-                name : book.name,
-                publisher : book.publisher,
-                id : book.id,
-            }))
+            data : {
+                books : book.map(book => ({
+                    name : book.name,
+                    id : book.id,
+                    publisher : book.publisher,
+                }))
+            }
+        })
+        response.code(200)
+        return response
+    }
+
+    else {
+        const response = h.response({
+            status : 'success',
+            data : {
+                books : books.map(book => ({
+                    name : book.name,
+                    id : book.id,
+                    publisher : book.publisher,
+                }))
+            }
         })
         response.code(200)
         return response
     }
     
-    const response = h.response({
-        status : 'success',
-        data : books.map(book => ({
-            name : book.name,
-            publisher : book.publisher,
-            id : book.id,
-        }))
-    })
-    response.code(200)
-    return response
 }
 
 const getBookById = (request, h) => {
     const {bookId} = request.params
 
-    const book = books.filter(book => book.id === bookId)
-    if (book[0] !== undefined) {
+    const book = books.filter(book => book.id === bookId)[0]
+    if (book !== undefined) {
+        console.log(book);
         const response = h.response({
             status : 'success',
-            data : book
+            data : {
+                book
+            }
         })
         response.code(200)
         return response
@@ -182,25 +200,23 @@ const updateBook = (request, h) => {
         })
         response.code(400)
         return response
-    } else if (index == -1) {
+    } else if (index !== -1) {
+        books[index] = {
+            ...books[index],
+            name, year, author, publisher, summary, pageCount, readPage, reading, updateAt,
+        }
         const response = h.response({
-            status : 'fail',
-            message : 'Gagal memperbarui buku. Id tidak ditemukan',
+            status : 'success',
+            message : 'Buku berhasil diperbarui',
         })
-        response.code(404)
+        response.code(200)
         return response
     }
-    const newBook = {
-        ...books[index],
-        name, year, author, publisher, summary, pageCount, readPage, reading, updateAt,
-    }
-    books.splice(index, 1, newBook)
     const response = h.response({
-        status : 'success',
-        message : 'Buku berhasil diperbarui',
+        status : 'fail',
+        message : 'Gagal memperbarui buku. Id tidak ditemukan',
     })
-    response.code(200)
-    console.log(books);
+    response.code(404)
     return response
 }
 
